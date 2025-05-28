@@ -385,12 +385,9 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
       const maxOrbitalRadius = 70; // Largest orbit from reduced orbital variations
       const totalMaxRadius = maxOrbitalRadius + childRadius + 10; // Add buffer
       
-      // Position orbs exactly one child orb diameter from navbar
+      // Position orbs RIGHT underneath the menubar
       const childOrbDiameter = childRadius * 2; // 24px now
-      const orbAreaTop = navbarHeight + childOrbDiameter; // Exactly one child diameter from navbar
-      const orbAreaBottom = titleStartY - 40; // Margin from title
-      const availableSpace = orbAreaBottom - orbAreaTop;
-      const centerY = orbAreaTop + (availableSpace * 0.3); // Position in upper portion of available space
+      const centerY = navbarHeight + childOrbDiameter + totalMaxRadius; // Right under navbar
       
       // Dynamic positioning based on screen size - positioned to right of center in header space
       const isMobile = vw < 768;
@@ -588,12 +585,9 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
                          parentVelocityRef.current.y +
                          scrollOffset;
         
-        // Keep orb exactly one child diameter from navbar and above title
+        // Keep orb right under navbar
         const childDiameter = childRadius * 2;
-        const titleStartY = vh * 0.28; // Updated to match new title position
-        const safeMinY = navbarHeight + childDiameter; // Maintain exact spacing from navbar
-        const safeMaxY = titleStartY - totalMaxRadius * scale - 20; // Stay above title with buffer
-        const py = Math.max(safeMinY, Math.min(safeMaxY, proposedY));
+        const py = navbarHeight + childDiameter + totalMaxRadius; // Fixed position right under navbar
         
         parentCenterRef.current = { x: px, y: py };
 
