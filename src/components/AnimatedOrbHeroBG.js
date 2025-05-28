@@ -52,8 +52,8 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
   const lastTransmissionTimeRef = useRef({});
 
   const childCount = 5;
-  const parentRadius = 30; // Reduced by 20% more (37 * 0.8)
-  const childRadius = 11; // Reduced by 20% more (14 * 0.8)
+  const parentRadius = 24; // Further reduced for better header integration
+  const childRadius = 9; // Further reduced for better header integration
   const parentPoints = 128; // High detail for smooth animation
   const childPoints = 64; // High detail for smooth animation
   const childAmp = 0.3; // Reduced amplitude for smoother shapes
@@ -336,13 +336,13 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
             // Initialize 3D orbital parameters - all children orbit around parent
             childState.orbitalAngle = (i * 2 * Math.PI / childCount); // Evenly spaced around circle
             childState.initialAngle = (i * 2 * Math.PI / childCount); // Store initial angle
-            // Create cosmic orbital patterns with elliptical paths
+            // Create cosmic orbital patterns with elliptical paths - reduced radii for tighter formation
             const orbitalVariations = [
-              { radius: 60, inclination: Math.PI / 12, eccentricity: 0.6, speed: 1.2 },  // Fast inner ellipse
-              { radius: 85, inclination: -Math.PI / 8, eccentricity: 0.3, speed: 0.7 },  // Medium tilted orbit
-              { radius: 55, inclination: Math.PI / 6, eccentricity: 0.8, speed: 1.5 },   // Very fast, highly elliptical
-              { radius: 95, inclination: Math.PI / 4, eccentricity: 0.4, speed: 0.5 },   // Slow outer orbit
-              { radius: 75, inclination: -Math.PI / 10, eccentricity: 0.5, speed: 0.9 }  // Counter-tilted medium orbit
+              { radius: 45, inclination: Math.PI / 12, eccentricity: 0.6, speed: 1.2 },  // Fast inner ellipse
+              { radius: 65, inclination: -Math.PI / 8, eccentricity: 0.3, speed: 0.7 },  // Medium tilted orbit
+              { radius: 40, inclination: Math.PI / 6, eccentricity: 0.8, speed: 1.5 },   // Very fast, highly elliptical
+              { radius: 70, inclination: Math.PI / 4, eccentricity: 0.4, speed: 0.5 },   // Slow outer orbit
+              { radius: 55, inclination: -Math.PI / 10, eccentricity: 0.5, speed: 0.9 }  // Counter-tilted medium orbit
             ];
             const variation = orbitalVariations[i % orbitalVariations.length];
             childState.orbitalRadius = variation.radius;
@@ -377,20 +377,21 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
       svg.setAttribute('height', vh.toString());
       svg.setAttribute('viewBox', `0 0 ${vw} ${vh}`);
       
-      // Position between navbar (height ~80px) and title (starts around 15% of viewport)
+      // Position in the space between navbar and title, completely separate from title area
       const navbarHeight = 80; // Approximate navbar height
       const titleStartY = vh * 0.15; // Where title starts (from HeroSection pt values)
       
       // Calculate max orbital extent (largest orbit + child radius)
-      const maxOrbitalRadius = 95; // Largest orbit from orbital variations
+      const maxOrbitalRadius = 70; // Largest orbit from reduced orbital variations
       const totalMaxRadius = maxOrbitalRadius + childRadius + 10; // Add buffer
       
-      // Ensure parent is positioned so orbits don't go above navbar
-      const minY = navbarHeight + totalMaxRadius + 20; // Add extra buffer to ensure no navbar overlap
-      const maxY = titleStartY + 50; // Can go slightly behind title
-      const centerY = Math.max(minY, navbarHeight + (titleStartY - navbarHeight) * 0.7); // Move orb lower
+      // Position orbs exactly one child orb diameter (18px) from navbar
+      const childOrbDiameter = childRadius * 2; // 18px
+      const orbAreaTop = navbarHeight + childOrbDiameter; // Exactly 18px from navbar
+      const orbAreaBottom = titleStartY - 80; // Much larger margin from title
+      const centerY = orbAreaTop + totalMaxRadius; // Position center accounting for orbital extent
       
-      // Dynamic positioning based on screen size
+      // Dynamic positioning based on screen size - positioned to right of center in header space
       const isMobile = vw < 768;
       const isTablet = vw >= 768 && vw < 1024;
       
@@ -398,22 +399,22 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
       let dynamicScale;
       
       if (isMobile) {
-        rightOffset = 0; // Center on mobile
-        // Ensure orbs fit within viewport minus navbar
-        const availableHeight = vh - navbarHeight - 40; // 40px bottom buffer
+        rightOffset = vw * 0.25; // More right offset on mobile
+        // Ensure orbs fit within available header space
         const availableWidth = vw - 40; // 20px margins
-        const maxDimension = Math.min(availableWidth, availableHeight);
-        dynamicScale = Math.min(0.7, maxDimension / (totalMaxRadius * 2.2));
+        const maxDimension = Math.min(availableWidth, availableSpace);
+        dynamicScale = Math.min(0.5, maxDimension / (totalMaxRadius * 2.2)); // Smaller on mobile
       } else if (isTablet) {
-        rightOffset = vw * 0.1;
-        dynamicScale = 0.85;
+        rightOffset = vw * 0.3; // Much more right offset for tablets
+        dynamicScale = 0.65; // Smaller scale for tablets
       } else {
-        rightOffset = Math.min(200, vw * 0.15);
-        dynamicScale = 1;
+        rightOffset = Math.min(400, vw * 0.35); // Much further right on desktop
+        dynamicScale = 0.75; // Appropriate scale for desktop header space
       }
       
       const finalScale = scale * dynamicScale;
       
+      // Position orbs in their dedicated header space
       parentCenterBaseRef.current = { x: vw * 0.5 + rightOffset, y: centerY };
       parentCenterRef.current = { x: vw * 0.5 + rightOffset, y: centerY };
       orbScaleRef.current = finalScale;
@@ -551,7 +552,7 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
         
         // Define safe zones based on navbar and orb dimensions
         const navbarHeight = 80;
-        const maxOrbitalRadius = 95;
+        const maxOrbitalRadius = 70;
         const totalMaxRadius = maxOrbitalRadius + childRadius + 10;
         
         // Gentler cursor effect
@@ -578,7 +579,7 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
                    floatX +
                    (mouseDx / mouseDistance || 0) * mouseEffect +
                    parentVelocityRef.current.x;
-        // Calculate parent Y with bounds to prevent navbar overlap
+        // Calculate parent Y with bounds to stay in header space
         const baseY = parentCenterBaseRef.current.y;
         const proposedY = baseY + 
                          floatY +
@@ -586,9 +587,12 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
                          parentVelocityRef.current.y +
                          scrollOffset;
         
-        // Ensure orb doesn't go above safe zone (navbar + buffer)
-        const safeMinY = navbarHeight + totalMaxRadius + 20;
-        const py = Math.max(safeMinY, proposedY);
+        // Keep orb exactly one child diameter from navbar
+        const childDiameter = childRadius * 2;
+        const titleStartY = vh * 0.15;
+        const safeMinY = navbarHeight + childDiameter + totalMaxRadius; // Maintain exact spacing
+        const safeMaxY = titleStartY - totalMaxRadius - 80; // Larger buffer from title
+        const py = Math.max(safeMinY, Math.min(safeMaxY, proposedY));
         
         parentCenterRef.current = { x: px, y: py };
 

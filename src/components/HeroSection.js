@@ -32,7 +32,7 @@ export default function HeroSection() {
           textAlign: 'center',
           zIndex: 1,
           background: 'transparent',
-          pt: { xs: 14, md: 22 },
+          pt: { xs: 10, md: 14 },
           pb: { xs: 8, md: 14 },
           overflow: 'hidden',
         }}
@@ -60,7 +60,7 @@ export default function HeroSection() {
           bottom: 0,
         }}
       />
-      <Container maxWidth="md" sx={{ mt: { xs: 20, md: 24 } }}>
+      <Container maxWidth="md" sx={{ mt: { xs: 12, md: 16 } }}>
   <Typography
     variant="h1"
     sx={{

@@ -21,7 +21,6 @@ import {
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import AppleIcon from '@mui/icons-material/Apple';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
@@ -35,6 +34,31 @@ import { useAuth } from '../contexts/AuthContext';
 import { keyframes } from '@mui/system';
 
 const ACCENT_COLOR = '#00ffc6';
+
+// Common TextField styles for dark theme
+const textFieldStyles = {
+  '& .MuiOutlinedInput-root': {
+    color: '#fff',
+    '& fieldset': {
+      borderColor: 'rgba(255,255,255,0.23)',
+    },
+    '&:hover fieldset': {
+      borderColor: 'rgba(255,255,255,0.4)',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: ACCENT_COLOR,
+    },
+  },
+  '& .MuiInputLabel-root': {
+    color: 'rgba(255,255,255,0.7)',
+    '&.Mui-focused': {
+      color: ACCENT_COLOR,
+    },
+  },
+  '& .MuiInputBase-input': {
+    color: '#fff',
+  },
+};
 
 // Animation keyframes
 const shimmer = keyframes`
@@ -197,11 +221,28 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
       PaperProps={{
         sx: {
           background: 'rgba(20,14,38,0.96)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-          borderRadius: '12px',
-          border: '1px solid rgba(123,66,246,0.15)',
+          backdropFilter: 'blur(20px)',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 10px 20px rgba(123,66,246,0.3)',
+          borderRadius: '20px',
+          border: '1px solid rgba(123,66,246,0.2)',
           color: '#fff',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          position: 'relative',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '4px',
+            background: `linear-gradient(90deg, ${ACCENT_COLOR} 0%, #7B42F6 50%, #ff006e 100%)`,
+            animation: 'gradientShift 3s ease infinite',
+          },
+          '@keyframes gradientShift': {
+            '0%': { backgroundPosition: '0% 50%' },
+            '50%': { backgroundPosition: '100% 50%' },
+            '100%': { backgroundPosition: '0% 50%' }
+          }
         }
       }}
     >
@@ -252,7 +293,7 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                   animation: `${successPulse} 0.5s ease-out`
                 }} 
               />
-              <Typography variant="h6" sx={{ mt: 2, color: ACCENT_COLOR }}>
+              <Typography variant="h6" sx={{ mt: 2, color: ACCENT_COLOR, fontWeight: 600 }}>
                 {isLogin ? 'Welcome back!' : 'Account created successfully!'}
               </Typography>
             </Box>
@@ -389,7 +430,7 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                     onChange={(e) => setName(e.target.value)}
                     disabled={loading}
                     required
-                    sx={{ mb: 2 }}
+                    sx={{ mb: 2, ...textFieldStyles }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -409,7 +450,7 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={loading}
                   required
-                  sx={{ mb: 2 }}
+                  sx={{ mb: 2, ...textFieldStyles }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -430,7 +471,7 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                       onChange={(e) => setPassword(e.target.value)}
                       disabled={loading}
                       required
-                      sx={{ mb: !isLogin ? 1 : 2 }}
+                      sx={{ mb: !isLogin ? 1 : 2, ...textFieldStyles }}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -497,7 +538,7 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                             ? 'Passwords do not match' 
                             : ''
                         }
-                        sx={{ mb: 2 }}
+                        sx={{ mb: 2, ...textFieldStyles }}
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -534,11 +575,20 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                         <Checkbox
                           checked={rememberMe}
                           onChange={(e) => setRememberMe(e.target.checked)}
-                          sx={{ color: 'rgba(255,255,255,0.7)' }}
+                          sx={{ 
+                            color: 'rgba(255,255,255,0.7)',
+                            '&.Mui-checked': {
+                              color: ACCENT_COLOR
+                            }
+                          }}
                         />
                       }
                       label="Remember me"
-                      sx={{ '& .MuiTypography-root': { fontSize: '0.9rem' } }}
+                      sx={{ 
+                        '& .MuiTypography-root': { 
+                          fontSize: '0.9rem'
+                        } 
+                      }}
                     />
                     <Link
                       component="button"
@@ -563,7 +613,12 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                       <Checkbox
                         checked={agreeToTerms}
                         onChange={(e) => setAgreeToTerms(e.target.checked)}
-                        sx={{ color: 'rgba(255,255,255,0.7)' }}
+                        sx={{ 
+                          color: 'rgba(255,255,255,0.7)',
+                          '&.Mui-checked': {
+                            color: ACCENT_COLOR
+                          }
+                        }}
                       />
                     }
                     label={
@@ -601,6 +656,7 @@ export default function AuthModal({ open, onClose, mode = 'login' }) {
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: '0 8px 24px rgba(123, 66, 246, 0.4)',
+                      backgroundPosition: '100% 0',
                     },
                     '&:disabled': {
                       transform: 'none',
