@@ -52,8 +52,8 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
   const lastTransmissionTimeRef = useRef({});
 
   const childCount = 5;
-  const parentRadius = 24; // Further reduced for better header integration
-  const childRadius = 9; // Further reduced for better header integration
+  const parentRadius = 36; // Increased size for better visibility
+  const childRadius = 12; // Increased size for better visibility
   const parentPoints = 128; // High detail for smooth animation
   const childPoints = 64; // High detail for smooth animation
   const childAmp = 0.3; // Reduced amplitude for smoother shapes
@@ -385,11 +385,12 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
       const maxOrbitalRadius = 70; // Largest orbit from reduced orbital variations
       const totalMaxRadius = maxOrbitalRadius + childRadius + 10; // Add buffer
       
-      // Position orbs exactly one child orb diameter (18px) from navbar
-      const childOrbDiameter = childRadius * 2; // 18px
-      const orbAreaTop = navbarHeight + childOrbDiameter; // Exactly 18px from navbar
-      const orbAreaBottom = titleStartY - 80; // Much larger margin from title
-      const centerY = orbAreaTop + totalMaxRadius; // Position center accounting for orbital extent
+      // Position orbs exactly one child orb diameter from navbar
+      const childOrbDiameter = childRadius * 2; // 24px now
+      const orbAreaTop = navbarHeight + childOrbDiameter; // Exactly one child diameter from navbar
+      const orbAreaBottom = titleStartY - 40; // Margin from title
+      const availableSpace = orbAreaBottom - orbAreaTop;
+      const centerY = orbAreaTop + (availableSpace * 0.3); // Position in upper portion of available space
       
       // Dynamic positioning based on screen size - positioned to right of center in header space
       const isMobile = vw < 768;
@@ -403,13 +404,13 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
         // Ensure orbs fit within available header space
         const availableWidth = vw - 40; // 20px margins
         const maxDimension = Math.min(availableWidth, availableSpace);
-        dynamicScale = Math.min(0.5, maxDimension / (totalMaxRadius * 2.2)); // Smaller on mobile
+        dynamicScale = Math.min(0.8, maxDimension / (totalMaxRadius * 2.2)); // Larger on mobile
       } else if (isTablet) {
         rightOffset = vw * 0.3; // Much more right offset for tablets
-        dynamicScale = 0.65; // Smaller scale for tablets
+        dynamicScale = 1.0; // Full scale for tablets
       } else {
         rightOffset = Math.min(400, vw * 0.35); // Much further right on desktop
-        dynamicScale = 0.75; // Appropriate scale for desktop header space
+        dynamicScale = 1.2; // Larger scale for desktop
       }
       
       const finalScale = scale * dynamicScale;
@@ -587,11 +588,11 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
                          parentVelocityRef.current.y +
                          scrollOffset;
         
-        // Keep orb exactly one child diameter from navbar
+        // Keep orb exactly one child diameter from navbar and above title
         const childDiameter = childRadius * 2;
         const titleStartY = vh * 0.15;
-        const safeMinY = navbarHeight + childDiameter + totalMaxRadius; // Maintain exact spacing
-        const safeMaxY = titleStartY - totalMaxRadius - 80; // Larger buffer from title
+        const safeMinY = navbarHeight + childDiameter; // Maintain exact spacing from navbar
+        const safeMaxY = titleStartY - totalMaxRadius * scale - 20; // Stay above title with buffer
         const py = Math.max(safeMinY, Math.min(safeMaxY, proposedY));
         
         parentCenterRef.current = { x: px, y: py };

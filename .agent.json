@@ -1,0 +1,43 @@
+{
+  "name": "RepSpheres",
+  "description": "AI-powered sales intelligence platform for dental and aesthetic industries",
+  "version": "1.0.0",
+  "framework": "react",
+  "deployment": {
+    "platform": "netlify",
+    "build": "npm run build",
+    "publish": "build"
+  },
+  "environment": {
+    "NODE_VERSION": "18",
+    "REACT_APP_VERSION": "$npm_package_version"
+  },
+  "features": {
+    "ai_models": "300+",
+    "data_years": 15,
+    "modules": [
+      "market-insights",
+      "workspace",
+      "sphere-os",
+      "linguistics",
+      "podcasts"
+    ]
+  },
+  "styling": {
+    "primary_colors": {
+      "accent": "#00ffc6",
+      "primary": "#7B42F6",
+      "secondary": "#3a86ff"
+    },
+    "animations": {
+      "orbs": true,
+      "gradients": true,
+      "particles": true
+    }
+  },
+  "metadata": {
+    "author": "RepSpheres Team",
+    "repository": "https://github.com/repspheres/globalrepspheres",
+    "license": "Proprietary"
+  }
+}
