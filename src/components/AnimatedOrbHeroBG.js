@@ -379,7 +379,7 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
       
       // Position in the space between navbar and title, completely separate from title area
       const navbarHeight = 80; // Approximate navbar height
-      const titleStartY = vh * 0.15; // Where title starts (from HeroSection pt values)
+      const titleStartY = vh * 0.28; // Where title starts (adjusted for new mt values)
       
       // Calculate max orbital extent (largest orbit + child radius)
       const maxOrbitalRadius = 70; // Largest orbit from reduced orbital variations
@@ -590,7 +590,7 @@ const AnimatedOrbHeroBG = ({ zIndex = 0, sx = {}, style = {}, className = "" }) 
         
         // Keep orb exactly one child diameter from navbar and above title
         const childDiameter = childRadius * 2;
-        const titleStartY = vh * 0.15;
+        const titleStartY = vh * 0.28; // Updated to match new title position
         const safeMinY = navbarHeight + childDiameter; // Maintain exact spacing from navbar
         const safeMaxY = titleStartY - totalMaxRadius * scale - 20; // Stay above title with buffer
         const py = Math.max(safeMinY, Math.min(safeMaxY, proposedY));
