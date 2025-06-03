@@ -64,11 +64,11 @@ const getNavLinks = (currentUrl, isAdmin) => {
       description: 'Real-time market intelligence'
     },
     { 
-      key: 'workspace',
-      label: 'Workspace', 
-      href: 'https://workspace.repspheres.com/',
+      key: 'canvas',
+      label: 'Canvas', 
+      href: 'https://canvas.repspheres.com/',
       icon: <DashboardIcon fontSize="small" sx={{ color: ACCENT_COLOR }} />,
-      description: 'Unified sales workflows'
+      description: 'AI-powered sales intelligence'
     },
     { 
       key: 'sphereos',
@@ -149,11 +149,11 @@ export default function NavBar() {
   const hidePodcast = useMediaQuery('(max-width:1200px)');
   const hideSphereOS = useMediaQuery('(max-width:1100px)');
   const hideLinguistics = useMediaQuery('(max-width:1000px)');
-  const hideWorkspace = useMediaQuery('(max-width:900px)');
+  const hideCanvas = useMediaQuery('(max-width:900px)');
   const hideInsights = useMediaQuery('(max-width:800px)');
   const isMobile = hideInsights; // all nav links collapsed below 800px
   // Show hamburger menu whenever any link is hidden
-  const showMenu = hidePodcast || hideSphereOS || hideLinguistics || hideWorkspace || isMobile;
+  const showMenu = hidePodcast || hideSphereOS || hideLinguistics || hideCanvas || isMobile;
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
   // Extra small breakpoints for very narrow screens
   const isXS = useMediaQuery('(max-width:400px)');
@@ -182,7 +182,7 @@ export default function NavBar() {
     if (key === 'linguistics') {
       return { '@media (max-width:1000px)': { display: 'none' } };
     }
-    if (key === 'workspace') {
+    if (key === 'canvas') {
       return { '@media (max-width:900px)': { display: 'none' } };
     }
     if (key === 'insights') {

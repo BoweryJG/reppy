@@ -5,7 +5,7 @@ const timelineSteps = [
   {
     marker: '1',
     title: 'Sphere Creation',
-    content: 'Create a Sphere for any target, account, or opportunity—this becomes your workspace for focused intelligence and engagement.'
+    content: 'Create a Sphere for any target, account, or opportunity—this becomes your Canvas for focused intelligence and engagement.'
   },
   {
     marker: '2',

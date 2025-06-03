@@ -17,7 +17,7 @@
     "data_years": 15,
     "modules": [
       "market-insights",
-      "workspace",
+      "canvas",
       "sphere-os",
       "linguistics",
       "podcasts"

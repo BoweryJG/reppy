@@ -28,17 +28,17 @@ const modules = [
     gradient: 'linear-gradient(135deg, #00ffc6 0%, #00d4a8 100%)',
   },
   {
-    id: 'ai-workspace',
-    title: 'AI Workspace',
-    subtitle: '300+ Models, Infinite Intelligence',
-    description: 'Pre-configured prompts instantly generate deep research reports, competitive analyses, and personalized strategies based on doctor, location, and product.',
+    id: 'canvas',
+    title: 'Canvas',
+    subtitle: 'AI-Powered Sales Intelligence',
+    description: 'Instant doctor verification and intelligent sales briefs. Generate targeted insights with real-time market data and personalized strategies.',
     icon: Psychology,
     color: '#3a86ff',
     features: [
-      '300+ AI models',
-      'Custom research reports',
-      'Competitive analysis',
-      'Instant insights'
+      'Doctor verification',
+      'Intelligent analysis', 
+      'Sales briefs',
+      'Real-time insights'
     ],
     gradient: 'linear-gradient(135deg, #3a86ff 0%, #2968db 100%)',
   },
@@ -398,7 +398,7 @@ export default function ModulesSection() {
               lineHeight: 1.6,
             }}
           >
-            Each module amplifies the others. Market insights feed your AI workspace. 
+            Each module amplifies the others. Market insights feed your Canvas intelligence. 
             Conversation analysis enhances your CRM data. Together, they create a 
             sales intelligence system that's greater than the sum of its parts.
           </Typography>

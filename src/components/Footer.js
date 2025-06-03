@@ -5,7 +5,7 @@ const footerLinks = [
   { href: '/blog.html', label: 'Blog' },
   { href: '/podcast', label: 'Podcast' },
   { href: '/dashboard/vault.html', label: 'Intelligence Vault' },
-  { href: '/workspace.html', label: 'Sphere OS' },
+  { href: 'https://canvas.repspheres.com/', label: 'Canvas' },
   { href: '/privacy.html', label: 'Privacy Policy' },
   { href: '/terms.html', label: 'Terms of Service' },
 ];
